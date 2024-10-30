@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "433:433"
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - inception
+    depends_on:
+      - mariadb
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build:
+      context: mariadb
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - inception
+    volumes:
+      - mariadb-data:/var/lib/mysql
+
+volumes:
+  mariadb-data:
+
+networks:
+  inception:
+    driver: bridge
