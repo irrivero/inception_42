@@ -22,10 +22,10 @@ remove_image:
 	docker rmi -f nginx
 
 test:
-	google-chrome https://127.0.0.1:443
+	start chrome https://127.0.0.1:443
 
 testd:
-	google-chrome https://irivero.42.fr:443
+	googlechrome https://irivero.42.fr:443
 
 re: down
 	make compose

@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build: 
+      context: nginx
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "443:443"
+    restart: always
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+    
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    build: 
+      context: mariadb
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    env_file: .env
+    restart: always
+    expose:
+      - "3306"
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    build: 
+      context: wordpress
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: always
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - inception
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/IreneRivero/Documents/42projects/data/wordpress
+      o: bind
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: /Users/IreneRivero/Documents/42projects/data/mariadb
+      o: bind
+
+networks:
+  inception:
+    driver: bridge
