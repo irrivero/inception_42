@@ -34,7 +34,7 @@ test:
 	start chrome https://127.0.0.1:443
 
 testd:
-	googlechrome https://irivero.42.fr:443
+	googlechrome https://irivero-.42.fr:443
 
 re: down
 	make compose

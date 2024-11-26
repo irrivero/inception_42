@@ -7,7 +7,7 @@ RUN mkdir -p /etc/nginx/ssl && apt install openssl -y
 RUN openssl req -x509 -nodes -days 365 \
 	-keyout /etc/nginx/ssl/inception.key \
 	-out /etc/nginx/ssl/inception.crt \
-	-subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=irivero.42.fr"
+	-subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=irivero-.42.fr"
 
 RUN rm -rf /etc/nginx/http.d/default.conf
 
