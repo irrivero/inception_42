@@ -1,19 +1,28 @@
+include ./srcs/.env
+
 all: compose
 
 compose:
-	docker compose -f ./requirements/docker-compose.yml up --build -d
+	docker compose -f ./srcs/docker-compose.yml up --build -d
+
+create_vol:
+	mkdir -p $(VOLUMES)/wordpress
+	mkdir -p $(VOLUMES)/mariadb
+
+rm_vol:
+	rm -rf $(VOLUMES)
 
 down:
-	docker compose -f ./requirements/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 exec:
 	docker exec -it nginx /bin/bash
 
 logsn:
-	docker compose -f ./requirements/docker-compose.yml logs nginx
+	docker compose -f ./srcs/docker-compose.yml logs nginx
 
 logsm:
-	docker compose -f ./requirements/docker-compose.yml logs mariadb
+	docker compose -f ./srcs/docker-compose.yml logs mariadb
 
 prune:
 	docker system prune -af

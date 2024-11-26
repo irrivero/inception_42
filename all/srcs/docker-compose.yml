@@ -4,10 +4,10 @@ services:
   nginx:
     image: nginx
     container_name: nginx
-    build: 
-      context: nginx
-      dockerfile: Dockerfile
     env_file: .env
+    build: 
+      context: requirements/nginx
+      dockerfile: Dockerfile
     ports:
       - "443:443"
     restart: always
@@ -21,15 +21,15 @@ services:
   mariadb:
     image: mariadb
     container_name: mariadb
+    env_file: .env
     build: 
-      context: mariadb
+      context: requirements/mariadb
       dockerfile: Dockerfile
       args:
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    env_file: .env
     restart: always
     expose:
       - "3306"
@@ -42,7 +42,7 @@ services:
     image: wordpress
     container_name: wordpress
     build: 
-      context: wordpress
+      context: requirements/wordpress
       dockerfile: Dockerfile
     env_file: .env
     restart: always
@@ -60,13 +60,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /Users/IreneRivero/Documents/42projects/data/wordpress
+      device: ${VOLUMES}/wordpress
       o: bind
   mariadb:
     driver: local
     driver_opts:
       type: none
-      device: /Users/IreneRivero/Documents/42projects/data/mariadb
+      device: ${VOLUMES}/mariadb
       o: bind
 
 networks:
