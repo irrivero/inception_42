@@ -17,6 +17,7 @@ RUN chmod -R 755 /var/www/wordpress && chown -R www-data:www-data /var/www/wordp
 COPY ./tools/wordpress.sh /tmp/wordpress.sh
 
 EXPOSE 9000
+# Create the run directory required to start the PHP7.3 service
 RUN mkdir -p /run/php
 
 ENTRYPOINT ["sh", "/tmp/wordpress.sh"]

@@ -31,8 +31,6 @@ lc-messages-dir         = /usr/share/mysql
 
 # all IPs on the network can connect, using the bind_address=* line
 # which basically means: bind_address=XXX.XXX.XX.XX
-# I changed this line here from 127.0.0.1 to 0.0.0.0 
-
 bind-address            = *
 
 
