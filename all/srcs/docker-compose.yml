@@ -31,8 +31,6 @@ services:
         - MYSQL_USER=${MYSQL_USER}
         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     restart: always
-    expose:
-      - "3306"
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -48,8 +46,7 @@ services:
     restart: always
     depends_on:
       - mariadb
-    expose:
-      - "9000"
+
     volumes:
       - wordpress:/var/www/html
     networks:
