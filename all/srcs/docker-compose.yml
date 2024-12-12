@@ -46,7 +46,6 @@ services:
     restart: always
     depends_on:
       - mariadb
-
     volumes:
       - wordpress:/var/www/html
     networks:
