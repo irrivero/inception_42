@@ -6,12 +6,6 @@ if [ -z "$MYSQL_DATABASE" ] || [ -z "$MYSQL_USER" ] || [ -z "$MYSQL_PASSWORD" ] 
     exit 1
 fi
 
-# Esperar a que MariaDB esté listo
-until mysqladmin ping -h localhost --silent; do
-    echo "Esperando a que MariaDB esté listo..."
-    sleep 2
-done
-
 # Crear el archivo SQL
 cat << EOF > /tmp/config.sql
 CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
@@ -21,9 +15,5 @@ ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
 FLUSH PRIVILEGES;
 EOF
 
-# Mostrar el contenido del archivo SQL para depuración
-echo "Contenido de /tmp/config.sql:"
-cat /tmp/config.sql
-
-# Ejecutar el archivo SQL
-mysql -u root -p"$MYSQL_ROOT_PASSWORD" < /tmp/config.sql
+# Ejecutar el archivo SQL con mysqld
+mysql -u root < /tmp/config.sql
